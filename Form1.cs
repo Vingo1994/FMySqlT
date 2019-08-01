@@ -59,14 +59,11 @@ namespace StaticalR
                 {
                     while (dr.Read())
                     {
-                        string tbadapt = dr[0].ToString();
                         comboBox1.Items.Add(dr[0].ToString());                        
                     }
                 }
             }
         }
-
-
 
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
