@@ -26,7 +26,6 @@ namespace StaticalR
 
         string SQL;
 
-
         public Form1()
         {
             InitializeComponent();
@@ -61,13 +60,10 @@ namespace StaticalR
                     while (dr.Read())
                     {
                         string tbadapt = dr[0].ToString();
-                        comboBox1.Items.Add(dr[0].ToString());
-                        
+                        comboBox1.Items.Add(dr[0].ToString());                        
                     }
                 }
             }
-
-
         }
 
 
