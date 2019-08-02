@@ -26,6 +26,7 @@ namespace StaticalR
 
         string SQL;
 
+
         public Form1()
         {
             InitializeComponent();
@@ -59,22 +60,40 @@ namespace StaticalR
                 {
                     while (dr.Read())
                     {
-                        comboBox1.Items.Add(dr[0].ToString());                        
+                        comboBox1.Items.Add(new TableIN(dr[0].ToString(), dr[0].ToString().Remove(0,7).Insert(3,"/")));
                     }
                 }
             }
+
         }
 
+        private class TableIN
+        {
+            public TableIN(string table, string calender)
+            {
+                Table = table;
+                Calender = calender;
+            }
+
+            public string Table { get; set; }
+            public string Calender { get; set; }
+            public DateTime TwCalender()
+            {
+                return DateTime.Parse(Calender);
+            }
+        }
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            textBox1.Text = (string)comboBox1.SelectedItem;
+            TableIN item = comboBox1.Items[comboBox1.SelectedIndex] as TableIN;
+            textBox1.Text = item.Calender;
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
             //Number of records in the table
-            SQL = $"SELECT COUNT(*) FROM {comboBox1.Text} WHERE extno BETWEEN '2301' and '2304' and action='Answer'";
+            TableIN item = comboBox1.Items[comboBox1.SelectedIndex] as TableIN;
+            SQL = $"SELECT COUNT(*) FROM {item.Table} WHERE extno BETWEEN '2301' and '2304' and action='Answer'";
             MySqlCommand cmd = new MySqlCommand(SQL, conn);
 
             int _count = (int)(long)cmd.ExecuteScalar();
@@ -87,3 +106,5 @@ namespace StaticalR
         }
     }
 }
+    
+
