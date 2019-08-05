@@ -26,7 +26,21 @@ namespace StaticalR
 
         string SQL;
 
+        private class PbxLog
+        {
+            public PbxLog(string table, string calender)
+            {
+                Table = table;
+                Calender = calender;
+            }
 
+            public string Table { get; set; }
+            public string Calender { get; set; }
+            public override string ToString()
+            {
+                return Calender;
+            }
+        }
         public Form1()
         {
             InitializeComponent();
@@ -53,46 +67,31 @@ namespace StaticalR
             }
 
             SQL = $"SHOW tables FROM {dbName} like 'pbxlog%'";    //Find specify table
-
             using (MySqlCommand cmd = new MySqlCommand(SQL, conn))
             {
                 using (MySqlDataReader dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
-                        comboBox1.Items.Add(new TableIN(dr[0].ToString(), dr[0].ToString().Remove(0,7).Insert(3,"/")));
+                      comboBox1.Items.Add(new PbxLog(dr[0].ToString(), dr[0].ToString().Remove(0, 7).Insert(3, "/")));
                     }
                 }
             }
 
         }
 
-        private class TableIN
-        {
-            public TableIN(string table, string calender)
-            {
-                Table = table;
-                Calender = calender;
-            }
-
-            public string Table { get; set; }
-            public string Calender { get; set; }
-            public DateTime TwCalender()
-            {
-                return DateTime.Parse(Calender);
-            }
-        }
-
+        
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            TableIN item = comboBox1.Items[comboBox1.SelectedIndex] as TableIN;
+            PbxLog item = comboBox1.Items[comboBox1.SelectedIndex] as PbxLog;
             textBox1.Text = item.Calender;
+            
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
             //Number of records in the table
-            TableIN item = comboBox1.Items[comboBox1.SelectedIndex] as TableIN;
+            PbxLog item = comboBox1.Items[comboBox1.SelectedIndex] as PbxLog;
             SQL = $"SELECT COUNT(*) FROM {item.Table} WHERE extno BETWEEN '2301' and '2304' and action='Answer'";
             MySqlCommand cmd = new MySqlCommand(SQL, conn);
 
