@@ -16,10 +16,10 @@ namespace StaticalR
 
     public partial class Form1 : Form
     {
-        static string dbHost = "10.2.35.35";        //需連結的資料庫IP位址
-        static string dbUser = "centeruser";              //需連結的資料庫帳戶
-        static string dbPass = "w12kytpc110";            //需連結的資料庫密碼
-        static string dbName = "pbxrec";              //需連結的資料庫名稱
+        static string dbHost = "127.0.0.1";        //需連結的資料庫IP位址
+        static string dbUser = "user";              //需連結的資料庫帳戶
+        static string dbPass = "password";            //需連結的資料庫密碼
+        static string dbName = "test";              //需連結的資料庫名稱
 
         static string connStr = "server=" + dbHost + ";uid=" + dbUser + ";pwd=" + dbPass + ";database=" + dbName;
         MySqlConnection conn = new MySqlConnection(connStr);
